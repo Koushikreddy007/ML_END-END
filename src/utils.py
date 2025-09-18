@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import numpy as np
 import pickle
+import dill
 from sklearn.metrics import r2_score 
 from sklearn.model_selection import GridSearchCV
 
@@ -42,5 +43,12 @@ def evaluate_model(x_train,y_train,x_test,y_test,models,param):
             report[model_name]=test_model_score
         return report
     
+    except Exception as e:
+        raise customeException(e,sys)
+    
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return dill.load(file_obj)
     except Exception as e:
         raise customeException(e,sys)
